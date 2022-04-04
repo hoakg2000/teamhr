@@ -20,7 +20,6 @@ public class DevResponseDTO {
     private Date birth;
     private Collection<Team> teams;
     private Collection<Skill> skills;
-    private Collection<Row> rows;
 
     public DevResponseDTO(Dev dev){
         this.id = dev.getId();
@@ -42,7 +41,6 @@ public class DevResponseDTO {
                 ", birth=" + birth +
                 ", teams=" + teams +
                 ", skills=" + skills +
-                ", rows=" + rows +
                 '}';
     }
 }
