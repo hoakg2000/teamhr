@@ -2,11 +2,15 @@ package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tma.teamhr.DTO.RequestDTO.DevRequestDTO;
+import com.tma.teamhr.utils.message;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import javax.persistence.Column;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.Date;
 
@@ -44,11 +48,16 @@ public class Dev {
     @JsonIgnore
     private Collection<Row> rows;
 
-    public void DTOtoEntity(DevRequestDTO requestDTO){
+    public void DTOtoEntity(DevRequestDTO requestDTO) throws Exception {
         this.name = requestDTO.getName();
         this.idNumber = requestDTO.getIdNumber();
         this.phoneNumber = requestDTO.getPhoneNumber();
-        this.birth = requestDTO.getBirth();
+
+        try {
+            this.birth = new SimpleDateFormat("dd/MM/yyyy").parse(requestDTO.getBirth());;
+        }catch (DateTimeParseException | ParseException ex){
+            throw new Exception(message.DATE_PARSE_ERROR);
+        }
     }
 
 }

@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 public class DevRequestDTO {
 
+    private int id;
     @NotNull
     @Size(min = 3)
     private String name;
@@ -23,7 +24,7 @@ public class DevRequestDTO {
     @Size(min = 10, max = 20)
     private String phoneNumber;
 
-    private Date birth;
+    private String birth;
 
     private Collection<Integer> teams;
 
