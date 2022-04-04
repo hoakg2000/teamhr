@@ -1,5 +1,6 @@
 package com.tma.teamhr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,7 @@ public class Columnn {
     private ColumnType type;
 
     @OneToMany(mappedBy = "column")
+    @JsonIgnore
     private Collection<Row> rows;
 
 

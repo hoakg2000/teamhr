@@ -1,5 +1,6 @@
 package com.tma.teamhr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class Skill {
     private String name;
 
     @ManyToMany(mappedBy = "skills")
+    @JsonIgnore
     private Collection<Dev> devs;
 
     public void DTOtoEntity(SkillRequestDTO dto){
