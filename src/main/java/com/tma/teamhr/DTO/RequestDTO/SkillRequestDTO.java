@@ -15,4 +15,9 @@ public class SkillRequestDTO {
     @Size(min = 2)
     @NotNull
     private String name;
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

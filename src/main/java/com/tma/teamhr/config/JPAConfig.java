@@ -36,7 +36,7 @@ public class JPAConfig {
     public EntityManagerFactory entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-        factory.setPackagesToScan("com.tma.teamhr.pojos");
+        factory.setPackagesToScan("com.tma.teamhr.model");
         factory.setDataSource(dataSource());
         factory.afterPropertiesSet();
 
