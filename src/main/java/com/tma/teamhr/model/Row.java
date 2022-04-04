@@ -1,4 +1,4 @@
-package com.tma.teamhr.pojos;
+package com.tma.teamhr.model;
 
 import lombok.Getter;
 import lombok.Setter;

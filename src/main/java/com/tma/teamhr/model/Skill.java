@@ -1,6 +1,6 @@
-package com.tma.teamhr.pojos;
+package com.tma.teamhr.model;
 
-import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
+//import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ public class Skill {
     @ManyToMany(mappedBy = "skills")
     private Collection<Dev> devs;
 
-    public void DTOtoEntity(SkillRequestDTO dto){
-        this.name = dto.getName();
-    }
+//    public void DTOtoEntity(SkillRequestDTO dto){
+//        this.name = dto.getName();
+//    }
 }

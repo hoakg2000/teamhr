@@ -1,4 +1,4 @@
-package com.tma.teamhr.pojos;
+package com.tma.teamhr.model;
 
 public enum ColumnType {
     YN,

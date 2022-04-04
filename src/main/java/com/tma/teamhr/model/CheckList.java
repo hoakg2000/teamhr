@@ -1,4 +1,4 @@
-package com.tma.teamhr.pojos;
+package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
