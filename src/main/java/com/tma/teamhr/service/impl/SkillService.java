@@ -1,5 +1,7 @@
 package com.tma.teamhr.service.impl;
 
+import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
+import com.tma.teamhr.DTO.ResponseDTO.SkillResponseDTO;
 import com.tma.teamhr.model.Skill;
 import com.tma.teamhr.repository.ISkillRepository;
 import com.tma.teamhr.service.ISkillService;
@@ -21,37 +23,54 @@ public class SkillService implements ISkillService {
     private ISkillRepository skillRepository;
 
     @Override
-    public Skill getById(int id) throws NullPointerException{
+    public SkillResponseDTO getById(int id) throws NullPointerException{
+
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         if (optionalSkill.isEmpty())
             throw new NullPointerException(message.NOTEXIST_ID);
-        return optionalSkill.get();
+
+        return new SkillResponseDTO(optionalSkill.get());
     }
 
     @Override
-    public List<Skill> getAll() {
+    public List<SkillResponseDTO> getAll() {
         Iterable<Skill> skillIterable = skillRepository.findAll();
-        List<Skill> skillList = new ArrayList<>();
-        skillIterable.forEach(skillList::add);
+        List<SkillResponseDTO> skillList = new ArrayList<>();
+        skillIterable.forEach(skill -> {
+            skillList.add(new SkillResponseDTO(skill));
+        });
         return skillList;
     }
 
     @Override
-    public Skill create(Skill skill) throws SQLIntegrityConstraintViolationException{
-        List<Skill> skillList = getAll();
-        for (Skill skill1 : skillList) {
-            if (skill1.getName().equals(skill.getName())){
-                throw new SQLIntegrityConstraintViolationException(skill.toString() + " Already exist!!!");
-            }
-        }
+    public SkillResponseDTO create(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException{
+        List<Skill> skillList = skillRepository.getByName(requestDTO.getName());
+        if (!skillList.isEmpty())
+            throw new SQLIntegrityConstraintViolationException(requestDTO.toString() + " Already exist!!!");
+
+        Skill skill = new Skill();
+        skill.DTOtoEntity(requestDTO);
         skillRepository.save(skill);
-        return skill;
+
+        return new SkillResponseDTO(skill);
     }
 
     @Override
-    public Skill update(Skill skill){
+    public SkillResponseDTO update(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException {
+
+        Optional<Skill> optionalSkill = skillRepository.findById(requestDTO.getId());
+        if (optionalSkill.isEmpty())
+            throw new NullPointerException(message.NOTEXIST_ID);
+        Skill skill = optionalSkill.get();
+
+        List<Skill> skillList = skillRepository.getByName(requestDTO.getName());
+        if (!skillList.isEmpty())
+            throw new SQLIntegrityConstraintViolationException(requestDTO.toString() + " Already exist!!!");
+
+        skill.DTOtoEntity(requestDTO);
+
         skillRepository.save(skill);
-        return skill;
+        return new SkillResponseDTO(skill);
     }
 
     @Override

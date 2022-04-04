@@ -1,17 +1,13 @@
 package com.tma.teamhr.controller;
 
 import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
-import com.tma.teamhr.DTO.ResponsetDTO.ResponseDTO;
-import com.tma.teamhr.DTO.ResponsetDTO.SkillResponseDTO;
-import com.tma.teamhr.model.Dev;
-import com.tma.teamhr.model.Skill;
+import com.tma.teamhr.DTO.ResponseDTO.ResponseDTO;
+import com.tma.teamhr.DTO.ResponseDTO.SkillResponseDTO;
 import com.tma.teamhr.service.ISkillService;
-import com.tma.teamhr.service.impl.SkillService;
 import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -31,17 +27,17 @@ public class SkillController {
     public ResponseEntity<ResponseDTO> getAll(){
         ResponseDTO responseDTO = new ResponseDTO();
 
-        List<Skill> skillList = skillService.getAll();
+        List<SkillResponseDTO> skillList = skillService.getAll();
         if (skillList.isEmpty()){
             responseDTO.setMessage(message.GET_EMPTY);
+            responseDTO.setData(skillList);
         }
         else{
             List<SkillResponseDTO> responseDTOS = new ArrayList<>();
-            skillList.forEach(skill -> responseDTOS.add(new SkillResponseDTO(skill)));
+            skillList.forEach(skill -> responseDTOS.add(skill));
             responseDTO.setData(responseDTOS);
             responseDTO.setMessage(message.GET);
         }
-
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
@@ -49,12 +45,10 @@ public class SkillController {
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> create(@Valid @RequestBody SkillRequestDTO skillRequestDTO){
         ResponseDTO responseDTO = new ResponseDTO();
-        Skill skill = new Skill();
-        skill.DTOtoEntity(skillRequestDTO);
         try {
-            Skill data = skillService.create(skill);
+            SkillResponseDTO data = skillService.create(skillRequestDTO);
             responseDTO.setHeader(200);
-            responseDTO.setData(new SkillResponseDTO(data));
+            responseDTO.setData(data);
             responseDTO.setMessage("Create success");
         } catch (SQLIntegrityConstraintViolationException e) {
             responseDTO.setHeader(400);
@@ -68,8 +62,8 @@ public class SkillController {
         ResponseDTO responseDTO = new ResponseDTO();
         responseDTO.setHeader(200);
         try {
-            Skill skill = skillService.getById(id);
-            responseDTO.setData(new SkillResponseDTO(skill));
+            SkillResponseDTO skill = skillService.getById(id);
+            responseDTO.setData(skill);
             responseDTO.setMessage(message.GET);
         }catch (NullPointerException ex){
             responseDTO.setError(ex.getMessage() + id);
@@ -80,21 +74,26 @@ public class SkillController {
     @PostMapping("/{id}/update")
     public ResponseEntity<ResponseDTO> update(@PathVariable int id,
                                               @Valid @RequestBody SkillRequestDTO skillRequestDTO){
+        skillRequestDTO.setId(id);
         ResponseDTO responseDTO = new ResponseDTO();
-        Skill skill = null;
+        SkillResponseDTO skill = null;
         try {
-            skill = skillService.getById(id);
+            skill = skillService.update(skillRequestDTO);
+            responseDTO.setHeader(200);
+            responseDTO.setData(skill);
+            responseDTO.setMessage(message.UPDATE);
+
         }catch (NullPointerException ex){
             responseDTO.setError(ex.getMessage() + id);
             responseDTO.setHeader(400);
             return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            responseDTO.setError(ex.getMessage());
+            responseDTO.setHeader(400);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
         }
 
-        skill.DTOtoEntity(skillRequestDTO);
-        skillService.update(skill);
-        responseDTO.setHeader(200);
-        responseDTO.setData(new SkillResponseDTO(skill));
-        responseDTO.setMessage(message.UPDATE);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
