@@ -8,10 +8,7 @@ import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -24,8 +21,10 @@ public class DevController {
     private IDevService devService;
 
     @PostMapping("/{id}/update")
-    public ResponseEntity<ResponseDTO> update(@Valid @RequestBody DevRequestDTO devRequestDTO){
+    public ResponseEntity<ResponseDTO> update(@Valid @RequestBody DevRequestDTO devRequestDTO,
+                                              @PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
+        devRequestDTO.setId(id);
         try {
             DevResponseDTO data = devService.update(devRequestDTO);
             responseDTO.setHeader(200);
