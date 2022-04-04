@@ -44,10 +44,10 @@ public class Dev {
     @JsonIgnore
     private Collection<Row> rows;
 
-    public Dev(DevRequestDTO devRequestDTO){
-        this.name = devRequestDTO.getName();
-        this.idNumber = devRequestDTO.getIdNumber();
-        this.phoneNumber = devRequestDTO.getPhoneNumber();
-        this.birth = devRequestDTO.getBirth();
+    public void DTOtoEntity(DevRequestDTO dto){
+        this.name = dto.getName();
+        this.idNumber = dto.getIdNumber();
+        this.phoneNumber = dto.getPhoneNumber();
+        this.birth = dto.getBirth();
     }
 }

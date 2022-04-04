@@ -37,6 +37,7 @@ public class Team {
     private Collection<Article> articles;
 
     @OneToOne(mappedBy = "team", fetch = FetchType.EAGER)
+    @JsonIgnore
     private CheckList checkList;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

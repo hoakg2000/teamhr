@@ -34,6 +34,7 @@ public class CheckList {
     private Date updatedAt;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "team_id")
     private Team team;
 
