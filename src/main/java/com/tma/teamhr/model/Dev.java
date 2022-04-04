@@ -1,7 +1,6 @@
 package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-//import com.tma.teamhr.DTO.RequestDTO.DevRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,10 +43,4 @@ public class Dev {
     @JsonIgnore
     private Collection<Row> rows;
 
-//    public Dev(DevRequestDTO devRequestDTO){
-//        this.name = devRequestDTO.getName();
-//        this.idNumber = devRequestDTO.getIdNumber();
-//        this.phoneNumber = devRequestDTO.getPhoneNumber();
-//        this.birth = devRequestDTO.getBirth();
-//    }
 }

@@ -1,5 +1,6 @@
 package com.tma.teamhr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,10 +18,12 @@ public class Row {
     private int id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "column_id")
     private Columnn column;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "dev_id")
     private Dev dev;
 

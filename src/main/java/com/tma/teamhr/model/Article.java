@@ -1,5 +1,6 @@
 package com.tma.teamhr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,6 +35,7 @@ public class Article {
     private Date updatedAt;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(referencedColumnName = "id")
     private Team team;
 }
