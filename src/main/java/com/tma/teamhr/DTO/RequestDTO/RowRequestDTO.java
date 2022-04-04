@@ -1,17 +1,19 @@
 package com.tma.teamhr.DTO.RequestDTO;
 
-import com.tma.teamhr.pojos.Columnn;
-import com.tma.teamhr.pojos.Dev;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
+@Getter
+@Setter
 public class RowRequestDTO {
 
     @NotNull
-    private Columnn column;
+    private int columnId;
 
     @NotNull
-    private Dev dev;
+    private int devId;
 
     @NotNull
     private String value;

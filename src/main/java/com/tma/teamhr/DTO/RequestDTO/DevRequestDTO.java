@@ -1,7 +1,5 @@
 package com.tma.teamhr.DTO.RequestDTO;
 
-import com.tma.teamhr.DTO.ResponsetDTO.DevResponseDTO;
-import com.tma.teamhr.pojos.Dev;
 import lombok.Getter;
 import lombok.Setter;
 

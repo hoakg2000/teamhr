@@ -1,22 +1,20 @@
 package com.tma.teamhr.DTO.RequestDTO;
 
-import com.tma.teamhr.pojos.ColumnType;
-import com.tma.teamhr.pojos.Row;
+import lombok.Getter;
+import lombok.Setter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
+@Getter
+@Setter
 public class ColumnRequestDTO {
 
     @NotNull
     private String name;
 
     @NotNull
-    private ColumnType type;
+    private int type;
 
     private Collection<Integer> row_ids;
 
