@@ -1,6 +1,7 @@
 package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tma.teamhr.DTO.RequestDTO.RowRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,4 +29,8 @@ public class Row {
     private Dev dev;
 
     private String value;
+
+    public void DTOtoEntity(RowRequestDTO requestDTO){
+        this.value = requestDTO.getValue();
+    }
 }

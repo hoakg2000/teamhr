@@ -1,6 +1,7 @@
 package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tma.teamhr.DTO.RequestDTO.TeamRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,7 +39,7 @@ public class Team {
 
     @OneToOne(mappedBy = "team", fetch = FetchType.EAGER)
     @JsonIgnore
-    private CheckList checkList;
+    private Checklist checkList;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -47,4 +48,7 @@ public class Team {
             inverseJoinColumns = @JoinColumn(name = "dev_id"))
     private Collection<Dev> devs;
 
+    public void DTOtoEntity(TeamRequestDTO requestDTO){
+        this.name = requestDTO.getName();
+    }
 }

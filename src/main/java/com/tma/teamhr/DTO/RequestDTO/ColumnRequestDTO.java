@@ -14,7 +14,7 @@ public class ColumnRequestDTO {
     private String name;
 
     @NotNull
-    private int type;
+    private String type;
 
     private Collection<Integer> row_ids;
 

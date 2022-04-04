@@ -1,6 +1,7 @@
 package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tma.teamhr.DTO.RequestDTO.ArticleRequsetDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -38,4 +39,9 @@ public class Article {
     @JsonIgnore
     @JoinColumn(referencedColumnName = "id")
     private Team team;
+
+    public void DTOtoEntity(ArticleRequsetDTO requsetDTO){
+        this.title = requsetDTO.getTitle();
+        this.content = requsetDTO.getContent();
+    }
 }
