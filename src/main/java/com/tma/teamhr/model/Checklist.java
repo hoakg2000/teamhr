@@ -1,6 +1,7 @@
 package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tma.teamhr.DTO.RequestDTO.ChecklistRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,14 +10,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.persistence.Column;
 
-import java.util.Collection;
 import java.util.Date;
 
 @Entity
 @Table(name = "checklist")
 @Getter
 @Setter
-public class CheckList {
+public class Checklist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -38,5 +38,7 @@ public class CheckList {
     @JoinColumn(name = "team_id")
     private Team team;
 
-
+    public void DTOtoEntity(ChecklistRequestDTO requestDTO){
+        this.title = requestDTO.getTitle();
+    }
 }

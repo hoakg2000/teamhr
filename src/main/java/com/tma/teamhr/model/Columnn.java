@@ -1,6 +1,7 @@
 package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tma.teamhr.DTO.RequestDTO.ColumnRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,5 +26,8 @@ public class Columnn {
     @JsonIgnore
     private Collection<Row> rows;
 
-
+    public void DTOtoEntity(ColumnRequestDTO requestDTO){
+        this.name = requestDTO.getName();
+//        this.type = requestDTO.getType();
+    }
 }

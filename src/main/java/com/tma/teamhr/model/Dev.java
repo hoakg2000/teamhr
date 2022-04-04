@@ -1,6 +1,7 @@
 package com.tma.teamhr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tma.teamhr.DTO.RequestDTO.DevRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,5 +43,12 @@ public class Dev {
     @OneToMany(mappedBy = "dev", fetch = FetchType.LAZY)
     @JsonIgnore
     private Collection<Row> rows;
+
+    public void DTOtoEntity(DevRequestDTO requestDTO){
+        this.name = requestDTO.getName();
+        this.idNumber = requestDTO.getIdNumber();
+        this.phoneNumber = requestDTO.getPhoneNumber();
+        this.birth = requestDTO.getBirth();
+    }
 
 }

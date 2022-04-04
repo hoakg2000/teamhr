@@ -13,6 +13,5 @@ public class ChecklistRequestDTO {
     @NotNull
     @Size(min = 3)
     private String title;
-
-    private int team_id;
+    private int teamId;
 }
