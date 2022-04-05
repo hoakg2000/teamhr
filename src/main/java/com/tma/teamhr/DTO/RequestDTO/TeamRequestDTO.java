@@ -11,6 +11,7 @@ import java.util.Collection;
 @Setter
 public class TeamRequestDTO {
 
+    private int id;
     @NotNull
     @Size(min = 3)
     private String name;
