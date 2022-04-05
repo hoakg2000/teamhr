@@ -1,15 +1,19 @@
 package com.tma.teamhr.service.impl;
 
+import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.SkillResponseDTO;
 import com.tma.teamhr.model.Skill;
 import com.tma.teamhr.repository.SkillRepository;
 import com.tma.teamhr.service.SkillService;
+import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,5 +30,23 @@ public class SkillServiceImpl implements SkillService {
             skillList.add(new SkillResponseDTO(skill));
         });
         return skillList;
+    }
+
+    @Override
+    public SkillResponseDTO update(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException {
+
+        Optional<Skill> optionalSkill = skillRepository.findById(requestDTO.getId());
+        if (optionalSkill.isEmpty())
+            throw new NullPointerException(message.NOTEXIST_ID);
+        Skill skill = optionalSkill.get();
+
+        List<Skill> skillList = skillRepository.getByName(requestDTO.getName());
+        if (!skillList.isEmpty())
+            throw new SQLIntegrityConstraintViolationException(requestDTO.toString() + " Already exist!!!");
+
+        skill.DTOtoEntity(requestDTO);
+
+        skillRepository.save(skill);
+        return new SkillResponseDTO(skill);
     }
 }
