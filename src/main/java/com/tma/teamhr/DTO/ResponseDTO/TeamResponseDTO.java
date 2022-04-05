@@ -27,7 +27,7 @@ public class TeamResponseDTO {
         this.name = team.getName();
         this.createdAt = team.getCreatedAt();
         this.updatedAt = team.getUpdatedAt();
-        this.articles = team.getArticles();
+//        this.articles = team.getArticles();
         this.checkList = team.getCheckList();
         this.devs = team.getDevs();
     }
