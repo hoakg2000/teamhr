@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SkillService {
     List<SkillResponseDTO> getAll();
+    Boolean delete(int id);
 }

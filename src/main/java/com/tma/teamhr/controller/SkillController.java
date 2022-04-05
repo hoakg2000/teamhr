@@ -7,6 +7,7 @@ import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,22 @@ public class SkillController {
             responseDTO.setMessage(message.GET_EMPTY);
         else
             responseDTO.setMessage(message.GET);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/delete")
+    public ResponseEntity<ResponseDTO> update(@PathVariable int id){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        try {
+            Boolean status = skillService.delete(id);
+            responseDTO.setHeader(200);
+            responseDTO.setMessage(message.DELETE);
+        }catch (NullPointerException ex){
+            responseDTO.setHeader(400);
+            responseDTO.setError(ex.getMessage() + id);
+        }
+
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 }
