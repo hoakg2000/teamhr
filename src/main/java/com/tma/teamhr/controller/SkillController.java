@@ -105,15 +105,13 @@ public class SkillController {
     @PostMapping("/create")
     public ResponseEntity<ResponseDTO> create(@Valid @RequestBody SkillRequestDTO skillRequestDTO){
         ResponseDTO responseDTO = new ResponseDTO();
-        try {
-            SkillResponseDTO data = skillService.create(skillRequestDTO);
-            responseDTO.setHeader(200);
-            responseDTO.setData(data);
-            responseDTO.setMessage("Create success");
-        } catch (SQLIntegrityConstraintViolationException e) {
-            responseDTO.setHeader(400);
-            responseDTO.setError(e.getMessage());
-        }
+
+        SkillResponseDTO data = skillService.create(skillRequestDTO);
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(data);
+        responseDTO.setMessage("Create success");
+
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 }
