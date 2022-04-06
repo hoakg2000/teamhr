@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface SkillService {
     List<SkillResponseDTO> getAll();
+    SkillResponseDTO getById(int id);
+    SkillResponseDTO create(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException;
     SkillResponseDTO update(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException;
 }

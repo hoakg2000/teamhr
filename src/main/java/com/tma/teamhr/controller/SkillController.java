@@ -67,4 +67,33 @@ public class SkillController {
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
+    @PostMapping("/{id}/get")
+    public ResponseEntity<ResponseDTO> getById(@PathVariable int id){
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setHeader(200);
+        try {
+            SkillResponseDTO skill = skillService.getById(id);
+            responseDTO.setData(skill);
+            responseDTO.setMessage(message.GET);
+        }catch (NullPointerException ex){
+            responseDTO.setError(ex.getMessage() + id);
+        }
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<ResponseDTO> create(@Valid @RequestBody SkillRequestDTO skillRequestDTO){
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            SkillResponseDTO data = skillService.create(skillRequestDTO);
+            responseDTO.setHeader(200);
+            responseDTO.setData(data);
+            responseDTO.setMessage("Create success");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            responseDTO.setHeader(400);
+            responseDTO.setError(e.getMessage());
+        }
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
 }
