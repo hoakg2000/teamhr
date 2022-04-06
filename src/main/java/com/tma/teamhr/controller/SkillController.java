@@ -66,23 +66,13 @@ public class SkillController {
                                               @Valid @RequestBody SkillRequestDTO skillRequestDTO){
         skillRequestDTO.setId(id);
         ResponseDTO responseDTO = new ResponseDTO();
-        SkillResponseDTO skill = null;
-        try {
-            skill = skillService.update(skillRequestDTO);
-            responseDTO.setHeader(200);
-            responseDTO.setData(skill);
-            responseDTO.setMessage(message.UPDATE);
 
-        }catch (NullPointerException ex){
-            responseDTO.setError(ex.getMessage() + id);
-            responseDTO.setHeader(400);
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        SkillResponseDTO skill = skillService.update(skillRequestDTO);
 
-        } catch (SQLIntegrityConstraintViolationException ex) {
-            responseDTO.setError(ex.getMessage());
-            responseDTO.setHeader(400);
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-        }
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(skill);
+        responseDTO.setMessage(message.UPDATE);
+
 
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
