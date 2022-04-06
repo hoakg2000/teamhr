@@ -54,4 +54,22 @@ public class SkillServiceImpl implements SkillService {
 
         return new SkillResponseDTO(skill);
     }
+
+    @Override
+    public SkillResponseDTO update(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException {
+
+        Optional<Skill> optionalSkill = skillRepository.findById(requestDTO.getId());
+        if (optionalSkill.isEmpty())
+            throw new NullPointerException(message.NOTEXIST_ID);
+        Skill skill = optionalSkill.get();
+
+        List<Skill> skillList = skillRepository.getByName(requestDTO.getName());
+        if (!skillList.isEmpty())
+            throw new SQLIntegrityConstraintViolationException(requestDTO.toString() + " Already exist!!!");
+
+        skill.DTOtoEntity(requestDTO);
+
+        skillRepository.save(skill);
+        return new SkillResponseDTO(skill);
+    }
 }

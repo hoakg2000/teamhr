@@ -41,6 +41,33 @@ public class SkillController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/update")
+    public ResponseEntity<ResponseDTO> update(@PathVariable int id,
+                                              @Valid @RequestBody SkillRequestDTO skillRequestDTO){
+        skillRequestDTO.setId(id);
+        ResponseDTO responseDTO = new ResponseDTO();
+        SkillResponseDTO skill = null;
+        try {
+            skill = skillService.update(skillRequestDTO);
+            responseDTO.setHeader(200);
+            responseDTO.setData(skill);
+            responseDTO.setMessage(message.UPDATE);
+
+        }catch (NullPointerException ex){
+            responseDTO.setError(ex.getMessage() + id);
+            responseDTO.setHeader(400);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+
+        } catch (SQLIntegrityConstraintViolationException ex) {
+            responseDTO.setError(ex.getMessage());
+            responseDTO.setHeader(400);
+            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+        }
+
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
     @PostMapping("/{id}/get")
     public ResponseEntity<ResponseDTO> getById(@PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
