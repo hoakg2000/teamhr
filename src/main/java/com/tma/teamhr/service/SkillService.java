@@ -11,4 +11,5 @@ public interface SkillService {
     SkillResponseDTO getById(int id);
     SkillResponseDTO create(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException;
     SkillResponseDTO update(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException;
+    Boolean delete(int id);
 }
