@@ -2,6 +2,7 @@ package com.tma.teamhr.service.impl;
 
 import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.SkillResponseDTO;
+import com.tma.teamhr.ExceptionHandler.ApiRequestException;
 import com.tma.teamhr.model.Skill;
 import com.tma.teamhr.repository.SkillRepository;
 import com.tma.teamhr.service.SkillService;
@@ -47,11 +48,11 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public SkillResponseDTO getById(int id) throws NullPointerException{
+    public SkillResponseDTO getById(int id){
 
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         if (optionalSkill.isEmpty())
-            throw new NullPointerException(message.NOTEXIST_ID);
+            throw new ApiRequestException(message.NOTEXIST_ID + id);
 
         return new SkillResponseDTO(optionalSkill.get());
     }
