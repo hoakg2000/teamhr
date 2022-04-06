@@ -1,5 +1,6 @@
 package com.tma.teamhr.controller;
 
+import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.ResponseDTO;
 import com.tma.teamhr.DTO.ResponseDTO.SkillResponseDTO;
 import com.tma.teamhr.service.SkillService;
@@ -7,11 +8,10 @@ import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,6 +51,21 @@ public class SkillController {
             responseDTO.setMessage(message.GET);
         }catch (NullPointerException ex){
             responseDTO.setError(ex.getMessage() + id);
+        }
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<ResponseDTO> create(@Valid @RequestBody SkillRequestDTO skillRequestDTO){
+        ResponseDTO responseDTO = new ResponseDTO();
+        try {
+            SkillResponseDTO data = skillService.create(skillRequestDTO);
+            responseDTO.setHeader(200);
+            responseDTO.setData(data);
+            responseDTO.setMessage("Create success");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            responseDTO.setHeader(400);
+            responseDTO.setError(e.getMessage());
         }
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
