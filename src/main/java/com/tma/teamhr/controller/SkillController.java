@@ -8,10 +8,7 @@ import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -41,6 +38,20 @@ public class SkillController {
             responseDTO.setMessage(message.GET_EMPTY);
         else
             responseDTO.setMessage(message.GET);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/get")
+    public ResponseEntity<ResponseDTO> getById(@PathVariable int id){
+        ResponseDTO responseDTO = new ResponseDTO();
+        responseDTO.setHeader(200);
+        try {
+            SkillResponseDTO skill = skillService.getById(id);
+            responseDTO.setData(skill);
+            responseDTO.setMessage(message.GET);
+        }catch (NullPointerException ex){
+            responseDTO.setError(ex.getMessage() + id);
+        }
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
