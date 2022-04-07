@@ -41,17 +41,12 @@ public class SkillController {
     }
 
     @PostMapping("/{id}/delete")
-    public ResponseEntity<ResponseDTO> update(@PathVariable int id){
+    public ResponseEntity<ResponseDTO> delete(@PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
 
-        try {
-            Boolean status = skillService.delete(id);
-            responseDTO.setHeader(200);
-            responseDTO.setMessage(message.DELETE);
-        }catch (NullPointerException ex){
-            responseDTO.setHeader(400);
-            responseDTO.setError(ex.getMessage() + id);
-        }
+        Boolean status = skillService.delete(id);
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setMessage(message.DELETE);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
