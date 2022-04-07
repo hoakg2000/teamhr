@@ -12,6 +12,7 @@ import java.util.Date;
 @Setter
 public class DevRequestDTO {
 
+    private int id;
     @NotNull
     @Size(min = 3)
     private String name;
