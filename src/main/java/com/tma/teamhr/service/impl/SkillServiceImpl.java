@@ -2,6 +2,7 @@ package com.tma.teamhr.service.impl;
 
 import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.SkillResponseDTO;
+import com.tma.teamhr.ExceptionHandler.ApiRequestException;
 import com.tma.teamhr.model.Skill;
 import com.tma.teamhr.repository.SkillRepository;
 import com.tma.teamhr.service.SkillService;
@@ -24,7 +25,12 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<SkillResponseDTO> getAll() {
-        Iterable<Skill> skillIterable = skillRepository.findAll();
+        Iterable<Skill> skillIterable;
+        try {
+           skillIterable = skillRepository.findAll();
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
         List<SkillResponseDTO> skillList = new ArrayList<>();
         skillIterable.forEach(skill -> {
             skillList.add(new SkillResponseDTO(skill));

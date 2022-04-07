@@ -2,6 +2,9 @@ package com.tma.teamhr.DTO.ResponseDTO;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
+
+import java.time.ZonedDateTime;
 
 @Getter
 public class ResponseDTO {
@@ -9,7 +12,7 @@ public class ResponseDTO {
     @Setter
     @Getter
     class Header{
-        private int status_code;
+        private HttpStatus statusCode;
     }
 
     @Setter
@@ -22,7 +25,8 @@ public class ResponseDTO {
     @Getter
     class Message{
         private String messenger;
-        private String error;
+        private Throwable error;
+        private ZonedDateTime timestamp;
     }
 
     private Header header = new Header();
@@ -31,13 +35,13 @@ public class ResponseDTO {
 
     public ResponseDTO(){}
 
-    public ResponseDTO(int code, Object obj){
+    public ResponseDTO(HttpStatus code, Object obj){
         setHeader(code);
         setData(obj);
     }
 
-    public void setHeader(int code){
-        this.header.setStatus_code(code);
+    public void setHeader(HttpStatus code){
+        this.header.setStatusCode(code);
     }
 
     public void setData(Object obj){
@@ -48,7 +52,11 @@ public class ResponseDTO {
         this.message.setMessenger(mes);
     }
 
-    public void setError(String err){
+    public void setError(Throwable err){
         this.message.setError(err);
+    }
+
+    public void setTime(ZonedDateTime zonedDateTime){
+        this.message.setTimestamp(zonedDateTime);
     }
 }
