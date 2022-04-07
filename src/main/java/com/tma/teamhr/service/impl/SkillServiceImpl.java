@@ -78,20 +78,23 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public SkillResponseDTO update(SkillRequestDTO requestDTO) throws SQLIntegrityConstraintViolationException {
+    public SkillResponseDTO update(SkillRequestDTO requestDTO) {
 
         Optional<Skill> optionalSkill = skillRepository.findById(requestDTO.getId());
         if (optionalSkill.isEmpty())
-            throw new NullPointerException(message.NOTEXIST_ID);
+            throw new ApiRequestException(message.NOTEXIST_ID + requestDTO.getId());
         Skill skill = optionalSkill.get();
 
         List<Skill> skillList = skillRepository.getByName(requestDTO.getName());
         if (!skillList.isEmpty())
-            throw new SQLIntegrityConstraintViolationException(requestDTO.toString() + " Already exist!!!");
+            throw new ApiRequestException(requestDTO.toString() + " Already exist!!!");
 
         skill.DTOtoEntity(requestDTO);
-
-        skillRepository.save(skill);
+        try {
+            skillRepository.save(skill);
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
         return new SkillResponseDTO(skill);
     }
 }
