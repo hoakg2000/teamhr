@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TeamService {
     List<TeamResponseDTO> getAll();
+    TeamResponseDTO getById(int id);
 }
