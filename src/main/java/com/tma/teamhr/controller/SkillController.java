@@ -30,18 +30,13 @@ public class SkillController {
     public ResponseEntity<ResponseDTO> getAll(){
         ResponseDTO responseDTO = new ResponseDTO();
         List<SkillResponseDTO> skillList;
-        try {
-            skillList = skillService.getAll();
-            responseDTO.setData(skillList);
-        }catch (Exception ex){
-            ex.printStackTrace();
-            responseDTO.setError(ex.getMessage());
-            return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-        }
-        if (skillList.isEmpty())
-            responseDTO.setMessage(message.GET_EMPTY);
-        else
-            responseDTO.setMessage(message.GET);
+
+        skillList = skillService.getAll();
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(skillList);
+        responseDTO.setMessage(message.GET);
+
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
@@ -79,7 +74,7 @@ public class SkillController {
     @PostMapping("/{id}/get")
     public ResponseEntity<ResponseDTO> getById(@PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
-        
+
         SkillResponseDTO skill = skillService.getById(id);
 
         responseDTO.setHeader(HttpStatus.OK);

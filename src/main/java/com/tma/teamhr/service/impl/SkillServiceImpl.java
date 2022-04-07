@@ -25,7 +25,12 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<SkillResponseDTO> getAll() {
-        Iterable<Skill> skillIterable = skillRepository.findAll();
+        Iterable<Skill> skillIterable;
+        try {
+           skillIterable = skillRepository.findAll();
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
         List<SkillResponseDTO> skillList = new ArrayList<>();
         skillIterable.forEach(skill -> {
             skillList.add(new SkillResponseDTO(skill));
@@ -47,11 +52,11 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public SkillResponseDTO getById(int id) throws NullPointerException{
+    public SkillResponseDTO getById(int id){
 
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         if (optionalSkill.isEmpty())
-            throw new NullPointerException(message.NOTEXIST_ID);
+            throw new ApiRequestException(message.NOTEXIST_ID + id);
 
         return new SkillResponseDTO(optionalSkill.get());
     }
