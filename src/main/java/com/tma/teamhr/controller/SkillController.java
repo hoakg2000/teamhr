@@ -41,7 +41,7 @@ public class SkillController {
     }
 
     @PostMapping("/{id}/delete")
-    public ResponseEntity<ResponseDTO> update(@PathVariable int id){
+    public ResponseEntity<ResponseDTO> delete(@PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
 
         Boolean status = skillService.delete(id);
