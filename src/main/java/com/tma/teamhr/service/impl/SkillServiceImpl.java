@@ -40,14 +40,13 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public Boolean delete(int id){
-
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         if (optionalSkill.isEmpty())
-            throw new NullPointerException(message.NOTEXIST_ID);
+            throw new ApiRequestException(message.NOTEXIST_ID);
         try {
             skillRepository.deleteById(id);
         }catch (Exception ex){
-            return false;
+            throw new ApiRequestException(ex.getMessage());
         }
         return true;
     }

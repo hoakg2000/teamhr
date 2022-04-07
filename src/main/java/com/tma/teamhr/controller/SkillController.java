@@ -68,8 +68,6 @@ public class SkillController {
         responseDTO.setData(skill);
         responseDTO.setMessage(message.UPDATE);
 
-
-
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
