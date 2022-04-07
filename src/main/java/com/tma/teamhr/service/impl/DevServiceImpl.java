@@ -1,5 +1,6 @@
 package com.tma.teamhr.service.impl;
 
+import com.tma.teamhr.DTO.RequestDTO.DevRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.DevResponseDTO;
 import com.tma.teamhr.ExceptionHandler.ApiRequestException;
 import com.tma.teamhr.model.Dev;
@@ -30,5 +31,17 @@ public class DevServiceImpl implements DevService {
         List<DevResponseDTO> devList = new ArrayList<>();
         devIterable.forEach(dev -> devList.add(new DevResponseDTO(dev)));
         return devList;
+    }
+
+    public DevResponseDTO create(DevRequestDTO requestDTO){
+        Dev dev = new Dev();
+        dev.DTOtoEntity(requestDTO);
+
+        try {
+            devRepository.save(dev);
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+        return new DevResponseDTO(dev);
     }
 }
