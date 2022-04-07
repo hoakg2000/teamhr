@@ -53,11 +53,11 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    public SkillResponseDTO getById(int id) throws NullPointerException{
+    public SkillResponseDTO getById(int id){
 
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         if (optionalSkill.isEmpty())
-            throw new NullPointerException(message.NOTEXIST_ID);
+            throw new ApiRequestException(message.NOTEXIST_ID + id);
 
         return new SkillResponseDTO(optionalSkill.get());
     }

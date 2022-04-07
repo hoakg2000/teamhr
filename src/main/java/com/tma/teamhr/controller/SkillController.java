@@ -86,14 +86,13 @@ public class SkillController {
     @PostMapping("/{id}/get")
     public ResponseEntity<ResponseDTO> getById(@PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setHeader(200);
-        try {
-            SkillResponseDTO skill = skillService.getById(id);
-            responseDTO.setData(skill);
-            responseDTO.setMessage(message.GET);
-        }catch (NullPointerException ex){
-            responseDTO.setError(ex.getMessage() + id);
-        }
+
+        SkillResponseDTO skill = skillService.getById(id);
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(skill);
+        responseDTO.setMessage(message.GET);
+
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
