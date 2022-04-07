@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface DevService {
     List<DevResponseDTO> getAll();
+    DevResponseDTO getById(int id);
 }
