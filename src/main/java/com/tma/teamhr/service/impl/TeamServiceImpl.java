@@ -44,7 +44,7 @@ public class TeamServiceImpl implements TeamService {
     public TeamResponseDTO update(TeamRequestDTO requestDTO) {
         Optional<Team> optionalTeam = teamRepository.findById(requestDTO.getId());
         if(optionalTeam.isEmpty())
-            throw new NullPointerException(message.NOTEXIST_ID);
+            throw new ApiRequestException(message.NOTEXIST_ID);
         Team team = optionalTeam.get();
         team.DTOtoEntity(requestDTO);
         teamRepository.save(team);
