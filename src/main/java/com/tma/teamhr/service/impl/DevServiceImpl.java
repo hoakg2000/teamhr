@@ -5,6 +5,7 @@ import com.tma.teamhr.ExceptionHandler.ApiRequestException;
 import com.tma.teamhr.model.Dev;
 import com.tma.teamhr.repository.DevRepository;
 import com.tma.teamhr.service.DevService;
+import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +31,19 @@ public class DevServiceImpl implements DevService {
         List<DevResponseDTO> devList = new ArrayList<>();
         devIterable.forEach(dev -> devList.add(new DevResponseDTO(dev)));
         return devList;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        try {
+            if (devRepository.findById(id).isEmpty())
+                throw new ApiRequestException(message.NOTEXIST_ID + id);
+
+            devRepository.deleteById(id);
+
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+        return true;
     }
 }
