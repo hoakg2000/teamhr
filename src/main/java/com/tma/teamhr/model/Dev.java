@@ -25,20 +25,21 @@ public class Dev {
     private int id;
     private String name;
 
-    @Column(name = "id_number")
-    private String idNumber;
+    @Column(name = "badge_d")
+    private String badgeId;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    private String phone;
 
     private Date birth;
 
+    private static final SimpleDateFormat birthStrFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     public void DTOtoEntity(DevRequestDTO requestDTO){
         this.name = requestDTO.getName();
-        this.idNumber = requestDTO.getIdNumber();
-        this.phoneNumber = requestDTO.getPhoneNumber();
+        this.badgeId = requestDTO.getBadgeId();
+        this.phone = requestDTO.getPhone();
         try {
-            this.birth = new SimpleDateFormat("dd/MM/yyyy").parse(requestDTO.getBirth());
+            this.birth = birthStrFormat.parse(requestDTO.getBirth());
         }catch (ParseException ex){
             throw new ApiRequestException(message.WRONG_DATE_FORMAT);
         }
