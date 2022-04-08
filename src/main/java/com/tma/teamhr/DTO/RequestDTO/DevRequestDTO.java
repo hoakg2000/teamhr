@@ -18,10 +18,10 @@ public class DevRequestDTO {
 
     @NotNull
     @Size(min = 9, max = 12)
-    private String idNumber;
+    private String badgeId;
 
     @Size(min = 10, max = 20)
-    private String phoneNumber;
+    private String phone;
 
     @Size(min = 8, max  = 10)
     private String birth;
