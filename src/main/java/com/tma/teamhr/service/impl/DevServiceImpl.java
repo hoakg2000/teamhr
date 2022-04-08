@@ -36,18 +36,19 @@ public class DevServiceImpl implements DevService {
 
     @Override
     public DevResponseDTO update(DevRequestDTO requestDTO) {
-        Optional<Dev> optionalDev = devRepository.findById(requestDTO.getId());
-        if (optionalDev.isEmpty())
-            throw new ApiRequestException(message.NOTEXIST_ID + requestDTO.getId());
-
-        Dev dev = optionalDev.get();
-        dev.DTOtoEntity(requestDTO);
         try {
+            Optional<Dev> optionalDev = devRepository.findById(requestDTO.getId());
+            if (optionalDev.isEmpty())
+                throw new ApiRequestException(message.NOTEXIST_ID + requestDTO.getId());
+
+            Dev dev = optionalDev.get();
+            dev.DTOtoEntity(requestDTO);
             devRepository.save(dev);
+
+            return new DevResponseDTO(dev);
         }catch (Exception ex){
             throw new ApiRequestException(ex.getMessage());
         }
 
-        return new DevResponseDTO(dev);
     }
 }
