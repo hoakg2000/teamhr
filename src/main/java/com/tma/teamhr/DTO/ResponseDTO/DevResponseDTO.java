@@ -14,15 +14,15 @@ import java.util.Date;
 public class DevResponseDTO {
     private int id;
     private String name;
-    private String idNumber;
-    private String phoneNumber;
+    private String badgeId;
+    private String phone;
     private Date birth;
 
     public DevResponseDTO(Dev dev){
         this.id = dev.getId();
         this.name = dev.getName();
-        this.idNumber = dev.getIdNumber();
-        this.phoneNumber = dev.getPhoneNumber();
+        this.badgeId = dev.getBadgeId();
+        this.phone = dev.getPhone();
         this.birth = dev.getBirth();
     }
 }
