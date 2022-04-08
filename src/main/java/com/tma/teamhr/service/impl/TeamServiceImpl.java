@@ -64,7 +64,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
-    public Boolean delete(int id) {
+    public void delete(int id) {
         if (teamRepository.findById(id).isEmpty())
             throw new ApiRequestException(message.NOTEXIST_ID + id);
 
@@ -73,6 +73,5 @@ public class TeamServiceImpl implements TeamService {
         }catch (Exception ex){
             throw new ApiRequestException(ex.getMessage());
         }
-        return true;
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 public interface TeamService {
     List<TeamResponseDTO> getAll();
     TeamResponseDTO getById(int id);
-    Boolean delete(int id);
+    void delete(int id);
     TeamResponseDTO create(TeamRequestDTO requestDTO);
     TeamResponseDTO update(TeamRequestDTO requestDTO);
 }
