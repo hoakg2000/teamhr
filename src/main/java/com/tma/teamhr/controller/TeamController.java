@@ -34,28 +34,24 @@ public class TeamController {
     @PostMapping("/{id}/get")
     public ResponseEntity<ResponseDTO> getById(@PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setHeader(200);
-        try {
-            TeamResponseDTO teamResponseDTO = teamService.getById(id);
-            responseDTO.setData(teamResponseDTO);
-            responseDTO.setMessage(message.GET);
-        }catch (NullPointerException ex){
-            responseDTO.setError(ex.getMessage() + id);
-        }
+        TeamResponseDTO teamResponseDTO = teamService.getById(id);
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(teamResponseDTO);
+        responseDTO.setMessage(message.GET);
+
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/update")
-    public ResponseEntity<ResponseDTO> update(@PathVariable int id,
-                                              @Valid @RequestBody TeamRequestDTO requestDTO){
-        requestDTO.setId(id);
-
+    @PostMapping("/create")
+    public ResponseEntity<ResponseDTO> create(@Valid @RequestBody TeamRequestDTO requestDTO){
         ResponseDTO responseDTO = new ResponseDTO();
 
         responseDTO.setHeader(HttpStatus.OK);
-        responseDTO.setData(teamService.update(requestDTO));
-        responseDTO.setMessage(message.UPDATE);
+        responseDTO.setData(teamService.create(requestDTO));
+        responseDTO.setMessage(message.GET);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+
     }
 }
