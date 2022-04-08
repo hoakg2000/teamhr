@@ -52,6 +52,16 @@ public class TeamController {
         responseDTO.setMessage(message.GET);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-
     }
+
+    @PostMapping("/{id}/delete")
+    public ResponseEntity<ResponseDTO> delete(@PathVariable int id){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        teamService.delete(id);
+        responseDTO.setMessage(message.DELETE);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+
 }
