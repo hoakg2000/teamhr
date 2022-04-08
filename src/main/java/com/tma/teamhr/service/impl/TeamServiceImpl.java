@@ -41,6 +41,17 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    public TeamResponseDTO update(TeamRequestDTO requestDTO) {
+        Optional<Team> optionalTeam = teamRepository.findById(requestDTO.getId());
+        if(optionalTeam.isEmpty())
+            throw new ApiRequestException(message.NOTEXIST_ID);
+        Team team = optionalTeam.get();
+        team.DTOtoEntity(requestDTO);
+        teamRepository.save(team);
+        return new TeamResponseDTO(team);
+    }
+
+    @Override
     public TeamResponseDTO create(TeamRequestDTO requestDTO) {
         Team team = new Team();
         team.DTOtoEntity(requestDTO);

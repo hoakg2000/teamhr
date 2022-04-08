@@ -9,4 +9,5 @@ public interface TeamService {
     List<TeamResponseDTO> getAll();
     TeamResponseDTO getById(int id);
     TeamResponseDTO create(TeamRequestDTO requestDTO);
+    TeamResponseDTO update(TeamRequestDTO requestDTO);
 }
