@@ -8,4 +8,5 @@ import java.util.List;
 public interface DevService {
     List<DevResponseDTO> getAll();
     DevResponseDTO create(DevRequestDTO requestDTO);
+    DevResponseDTO getById(int id);
 }
