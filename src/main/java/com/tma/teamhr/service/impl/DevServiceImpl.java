@@ -23,15 +23,28 @@ public class DevServiceImpl implements DevService {
     private DevRepository devRepository;
 
     public List<DevResponseDTO> getAll(){
+        Iterable<Dev> devIterable = devRepository.findAll();
+        List<DevResponseDTO> devList = new ArrayList<>();
+        devIterable.forEach(dev -> devList.add(new DevResponseDTO(dev)));
+        return devList;
+    }
+
+    public DevResponseDTO create(DevRequestDTO requestDTO){
         try {
-            Iterable<Dev> devIterable = devRepository.findAll();
-            List<DevResponseDTO> devList = new ArrayList<>();
-            devIterable.forEach(dev -> devList.add(new DevResponseDTO(dev)));
-            return devList;
+            Dev dev = new Dev();
+            dev.DTOtoEntity(requestDTO);
+            devRepository.save(dev);
+            return new DevResponseDTO(dev);
         }catch (Exception ex){
             throw new ApiRequestException(ex.getMessage());
         }
+    }
 
+    public DevResponseDTO getById(int id){
+        Optional<Dev> optionalDev = devRepository.findById(id);
+        if (optionalDev.isEmpty())
+            throw new ApiRequestException(message.GET);
+        return new DevResponseDTO(optionalDev.get());
     }
 
     @Override
