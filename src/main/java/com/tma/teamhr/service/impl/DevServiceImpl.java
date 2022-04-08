@@ -34,7 +34,7 @@ public class DevServiceImpl implements DevService {
     }
 
     @Override
-    public boolean delete(int id) {
+    public void delete(int id) {
         try {
             if (devRepository.findById(id).isEmpty())
                 throw new ApiRequestException(message.NOTEXIST_ID + id);
@@ -44,6 +44,5 @@ public class DevServiceImpl implements DevService {
         }catch (Exception ex){
             throw new ApiRequestException(ex.getMessage());
         }
-        return true;
     }
 }

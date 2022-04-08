@@ -35,10 +35,9 @@ public class DevController {
 
         responseDTO.setHeader(HttpStatus.OK);
 
-        if (devService.delete(id))
-            responseDTO.setMessage(message.DELETE);
-        else
-            responseDTO.setMessage(message.DELETE_FALSE);
+        devService.delete(id);
+
+        responseDTO.setMessage(message.DELETE);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

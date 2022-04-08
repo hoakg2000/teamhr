@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface DevService {
     List<DevResponseDTO> getAll();
-    boolean delete(int id);
+    void delete(int id);
 }
