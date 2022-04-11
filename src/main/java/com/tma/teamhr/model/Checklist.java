@@ -38,6 +38,7 @@ public class Checklist {
 
 
     public void DTOtoEntity(ChecklistRequestDTO requestDTO){
+        this.id = requestDTO.getId();
         this.title = requestDTO.getTitle();
     }
 }

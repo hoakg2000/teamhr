@@ -12,6 +12,8 @@ import javax.validation.constraints.Size;
 @Setter
 public class ChecklistRequestDTO {
 
+    private int id;
+
     @NotNull
     @Range(min = 1)
     private int team_id;

@@ -48,6 +48,21 @@ public class ChecklistServiceImpl implements ChecklistService {
     @Override
     public ChecklistResponseDTO create(ChecklistRequestDTO requestDTO) {
         try{
+            Checklist checklist = checklistRepository.findById(requestDTO.getId()).get();
+
+            checklist.DTOtoEntity(requestDTO);
+            checklist.setTeam(teamRepository.findById(requestDTO.getTeam_id()).get());
+
+            checklistRepository.save(checklist);
+            return new ChecklistResponseDTO(checklist);
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public ChecklistResponseDTO update(ChecklistRequestDTO requestDTO) {
+        try{
             Checklist checklist = new Checklist();
             checklist.DTOtoEntity(requestDTO);
 

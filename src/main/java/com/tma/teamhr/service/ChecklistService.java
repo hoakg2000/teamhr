@@ -9,4 +9,5 @@ public interface ChecklistService {
     List<ChecklistResponseDTO> getAll();
     ChecklistResponseDTO getById(int id);
     ChecklistResponseDTO create(ChecklistRequestDTO requestDTO);
+    ChecklistResponseDTO update(ChecklistRequestDTO requestDTO);
 }

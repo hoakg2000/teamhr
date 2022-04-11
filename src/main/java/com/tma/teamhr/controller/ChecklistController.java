@@ -52,5 +52,18 @@ public class ChecklistController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/update")
+    public ResponseEntity<ResponseDTO> create(@PathVariable int id,
+                                              @Valid @RequestBody ChecklistRequestDTO checklistRequestDTO){
+        ResponseDTO responseDTO = new ResponseDTO();
+        checklistRequestDTO.setId(id);
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(checklistService.create(checklistRequestDTO));
+        responseDTO.setMessage(message.GET);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
 
 }
