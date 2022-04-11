@@ -51,7 +51,7 @@ public class ChecklistServiceImpl implements ChecklistService {
             Checklist checklist = new Checklist();
             checklist.DTOtoEntity(requestDTO);
 
-            checklist.setTeam(teamRepository.findById(requestDTO.getTeamId()).get());
+            checklist.setTeam(teamRepository.findById(requestDTO.getTeam_id()).get());
 
             checklistRepository.save(checklist);
             return new ChecklistResponseDTO(checklist);
