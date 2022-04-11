@@ -7,4 +7,5 @@ import java.util.List;
 public interface ChecklistService {
     List<ChecklistResponseDTO> getAll();
     ChecklistResponseDTO getById(int id);
+    void delete(int id);
 }

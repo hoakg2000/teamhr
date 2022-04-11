@@ -40,5 +40,18 @@ public class ChecklistServiceImpl implements ChecklistService {
         return new ChecklistResponseDTO(optionalChecklist.get());
     }
 
+    @Override
+    public void delete(int id) {
+        try {
+            if (checklistRepository.findById(id).isEmpty())
+                throw new ApiRequestException(message.NOTEXIST_ID + id);
+
+            checklistRepository.deleteById(id);
+
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+    }
+
 
 }

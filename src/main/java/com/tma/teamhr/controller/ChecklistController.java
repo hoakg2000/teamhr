@@ -40,5 +40,16 @@ public class ChecklistController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/delete")
+    public ResponseEntity<ResponseDTO> delete(@PathVariable int id){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        responseDTO.setHeader(HttpStatus.OK);
+        checklistService.delete(id);
+        responseDTO.setMessage(message.DELETE);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
 
 }
