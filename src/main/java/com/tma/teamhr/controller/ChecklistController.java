@@ -47,7 +47,7 @@ public class ChecklistController {
 
         responseDTO.setHeader(HttpStatus.OK);
         responseDTO.setData(checklistService.create(checklistRequestDTO));
-        responseDTO.setMessage(message.GET);
+        responseDTO.setMessage(message.CREATE);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
