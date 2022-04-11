@@ -1,9 +1,11 @@
 package com.tma.teamhr.service.impl;
 
+import com.tma.teamhr.DTO.RequestDTO.ChecklistRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.ChecklistResponseDTO;
 import com.tma.teamhr.ExceptionHandler.ApiRequestException;
 import com.tma.teamhr.model.Checklist;
 import com.tma.teamhr.repository.ChecklistRepository;
+import com.tma.teamhr.repository.TeamRepository;
 import com.tma.teamhr.service.ChecklistService;
 import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class ChecklistServiceImpl implements ChecklistService {
 
     @Autowired
     private ChecklistRepository checklistRepository;
+
+    @Autowired
+    private TeamRepository teamRepository;
 
     @Override
     public List<ChecklistResponseDTO> getAll() {
@@ -38,6 +43,21 @@ public class ChecklistServiceImpl implements ChecklistService {
             throw new ApiRequestException(message.NOTEXIST_ID + id);
 
         return new ChecklistResponseDTO(optionalChecklist.get());
+    }
+
+    @Override
+    public ChecklistResponseDTO create(ChecklistRequestDTO requestDTO) {
+        try{
+            Checklist checklist = new Checklist();
+            checklist.DTOtoEntity(requestDTO);
+
+            checklist.setTeam(teamRepository.findById(requestDTO.getTeamId()).get());
+
+            checklistRepository.save(checklist);
+            return new ChecklistResponseDTO(checklist);
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
     }
 
 
