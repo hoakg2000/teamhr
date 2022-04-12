@@ -1,18 +1,16 @@
 package com.tma.teamhr.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tma.teamhr.DTO.RequestDTO.ColumnRequestDTO;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 @Entity
-@Table(name = "column")
+@Table(name = "columnn")
 @Getter
 @Setter
-public class Column {
+public class Columnn {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +18,11 @@ public class Column {
 
     private String name;
 
-    //private ColumnType type;
+//    @Enumerated(EnumType.ORDINAL)
+    private String type;
 
     public void DTOtoEntity(ColumnRequestDTO requestDTO){
         this.name = requestDTO.getName();
-//        this.type = ColumnType.values()[requestDTO.getType()];
+        this.type = ColumnType.values()[requestDTO.getType()].toString();
     }
 }
