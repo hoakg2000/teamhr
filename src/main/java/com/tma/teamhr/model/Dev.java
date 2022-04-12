@@ -25,7 +25,7 @@ public class Dev {
     private int id;
     private String name;
 
-    @Column(name = "badge_d")
+    @Column(name = "badge_id")
     private String badgeId;
 
     private String phone;
