@@ -43,7 +43,7 @@ public class DevServiceImpl implements DevService {
     public DevResponseDTO getById(int id){
         Optional<Dev> optionalDev = devRepository.findById(id);
         if (optionalDev.isEmpty())
-            throw new ApiRequestException(message.GET);
+            throw new ApiRequestException(message.NOTEXIST_ID + id);
         return new DevResponseDTO(optionalDev.get());
     }
 }

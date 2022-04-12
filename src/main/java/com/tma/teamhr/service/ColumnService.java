@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ColumnService {
     List<ColumnResponseDTO> getAll();
+    ColumnResponseDTO getById(int id);
 }
