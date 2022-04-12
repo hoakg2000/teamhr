@@ -44,7 +44,7 @@ public class SkillController {
     public ResponseEntity<ResponseDTO> delete(@PathVariable int id){
         ResponseDTO responseDTO = new ResponseDTO();
 
-        Boolean status = skillService.delete(id);
+        skillService.delete(id);
         responseDTO.setHeader(HttpStatus.OK);
         responseDTO.setMessage(message.DELETE);
 

@@ -6,5 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface SkillRepository extends CrudRepository<Skill, Integer> {
-    List<Skill> getByName(String name);
+    List<Skill> findByName(String name);
+    List<Skill> findByNameAndIdNot(String name, int id);
 }

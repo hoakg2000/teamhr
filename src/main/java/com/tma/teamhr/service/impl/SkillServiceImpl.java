@@ -2,7 +2,7 @@ package com.tma.teamhr.service.impl;
 
 import com.tma.teamhr.DTO.RequestDTO.SkillRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.SkillResponseDTO;
-import com.tma.teamhr.ExceptionHandler.ApiRequestException;
+import com.tma.teamhr.ExceptionHandler.*;
 import com.tma.teamhr.model.Skill;
 import com.tma.teamhr.repository.SkillRepository;
 import com.tma.teamhr.service.SkillService;
@@ -25,30 +25,23 @@ public class SkillServiceImpl implements SkillService {
 
     @Override
     public List<SkillResponseDTO> getAll() {
-        Iterable<Skill> skillIterable;
-        try {
-           skillIterable = skillRepository.findAll();
-        }catch (Exception ex){
-            throw new ApiRequestException(ex.getMessage());
-        }
         List<SkillResponseDTO> skillList = new ArrayList<>();
-        skillIterable.forEach(skill -> {
-            skillList.add(new SkillResponseDTO(skill));
+        skillRepository.findAll().forEach(skill -> {
+           skillList.add(new SkillResponseDTO(skill));
         });
         return skillList;
     }
 
     @Override
-    public Boolean delete(int id){
-        Optional<Skill> optionalSkill = skillRepository.findById(id);
-        if (optionalSkill.isEmpty())
-            throw new ApiRequestException(message.NOTEXIST_ID);
-        try {
+    public void delete(int id){
+        if (skillRepository.findById(id).isEmpty())
+            throw new ApiRequestException(message.NOTEXIST_ID + id);
+
+        try { //if devSkillRepository exist, check if skillid in records and throw DataBaseException
             skillRepository.deleteById(id);
-        }catch (Exception ex){
-            throw new ApiRequestException(ex.getMessage());
+        }catch (DataBaseException ex){
+            throw new DataBaseException("Cant delete object due to foreign key");
         }
-        return true;
     }
 
     @Override
@@ -56,23 +49,19 @@ public class SkillServiceImpl implements SkillService {
 
         Optional<Skill> optionalSkill = skillRepository.findById(id);
         if (optionalSkill.isEmpty())
-            throw new ApiRequestException(message.NOTEXIST_ID + id);
+            throw new NotFoundException(message.NOTEXIST_ID + id);
 
         return new SkillResponseDTO(optionalSkill.get());
     }
 
     @Override
     public SkillResponseDTO create(SkillRequestDTO requestDTO){
-        List<Skill> skillList = skillRepository.getByName(requestDTO.getName());
-        if (!skillList.isEmpty())
+        if (!skillRepository.findByName(requestDTO.getName()).isEmpty())
             throw new ApiRequestException(requestDTO.toString() + " Already exist!!!");
-        Skill skill = new Skill();
-        skill.DTOtoEntity(requestDTO);
-        try {
-            skillRepository.save(skill);
-        }catch (Exception ex){
-            throw new ApiRequestException(ex.getMessage());
-        }
+
+        Skill skill = new Skill(requestDTO);
+        skillRepository.save(skill);
+
         return new SkillResponseDTO(skill);
     }
 
@@ -81,19 +70,16 @@ public class SkillServiceImpl implements SkillService {
 
         Optional<Skill> optionalSkill = skillRepository.findById(requestDTO.getId());
         if (optionalSkill.isEmpty())
-            throw new ApiRequestException(message.NOTEXIST_ID + requestDTO.getId());
-        Skill skill = optionalSkill.get();
+            throw new NotFoundException(message.NOTEXIST_ID + requestDTO.getId());
 
-        List<Skill> skillList = skillRepository.getByName(requestDTO.getName());
+        List<Skill> skillList = skillRepository.findByNameAndIdNot(requestDTO.getName(), requestDTO.getId());
         if (!skillList.isEmpty())
-            throw new ApiRequestException(requestDTO.toString() + " Already exist!!!");
+            throw new UniqueEntityException(requestDTO.toString() + " Already exist!!!");
 
+        Skill skill = optionalSkill.get();
         skill.DTOtoEntity(requestDTO);
-        try {
-            skillRepository.save(skill);
-        }catch (Exception ex){
-            throw new ApiRequestException(ex.getMessage());
-        }
+        skillRepository.save(skill);
+
         return new SkillResponseDTO(skill);
     }
 }
