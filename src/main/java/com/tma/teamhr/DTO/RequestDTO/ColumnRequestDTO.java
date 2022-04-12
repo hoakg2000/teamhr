@@ -11,12 +11,17 @@ import java.util.Collection;
 @Setter
 public class ColumnRequestDTO {
 
+    private int id;
+
     @NotNull
     private String name;
 
     @NotNull
     @Range(min = 1)
     private int type;
+
+    @Range(min=1)
+    private int checklistId;
 
 
 }

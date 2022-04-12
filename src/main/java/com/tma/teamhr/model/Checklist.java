@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.persistence.Column;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -32,6 +33,9 @@ public class Checklist {
     @Temporal(TemporalType.DATE)
     private Date updatedAt;
 
+    @OneToMany(mappedBy = "checklist")
+    @JsonIgnore
+    private Collection<Columnn> columnns;
 
     public void DTOtoEntity(ChecklistRequestDTO requestDTO){
         this.title = requestDTO.getTitle();
