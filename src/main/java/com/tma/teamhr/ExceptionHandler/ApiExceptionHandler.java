@@ -14,13 +14,31 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(value = {ApiRequestException.class})
     public ResponseEntity<ResponseDTO> handleApiRequestException(ApiRequestException e){
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        ResponseDTO responseDTO = new ResponseDTO();
-        responseDTO.setMessage(e.getMessage());
-        responseDTO.setError(e);
-        responseDTO.setHeader(status);
-        responseDTO.setTime(ZonedDateTime.now(ZoneId.of("Z")));
+        return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
+    }
 
-        return new ResponseEntity<>(responseDTO, status);
+    @ExceptionHandler(value = {UniqueEntityException.class})
+    public ResponseEntity<ResponseDTO> handleUniqueEntityException(UniqueEntityException e){
+        return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {EntityToDTOConvertException.class})
+    public ResponseEntity<ResponseDTO> handleEntityToDTOConvertException(UniqueEntityException e){
+        return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {NotFoundException.class})
+    public ResponseEntity<ResponseDTO> handleNotFoundException(UniqueEntityException e){
+        return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(value = {DataBaseException.class})
+    public ResponseEntity<ResponseDTO> handleDataBaseException(UniqueEntityException e){
+        return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
+    }
+
+    public ResponseDTO initExceptionResponse(RuntimeException e){
+        ResponseDTO responseDTO = new ResponseDTO(e);
+        return responseDTO;
     }
 }
