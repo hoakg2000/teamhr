@@ -35,7 +35,7 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public void delete(int id){
         if (skillRepository.findById(id).isEmpty())
-            throw new ApiRequestException(message.NOTEXIST_ID + id);
+            throw new NotFoundException(message.NOTEXIST_ID + id);
 
         try { //if devSkillRepository exist, check if skillid in records and throw DataBaseException
             skillRepository.deleteById(id);
@@ -57,7 +57,7 @@ public class SkillServiceImpl implements SkillService {
     @Override
     public SkillResponseDTO create(SkillRequestDTO requestDTO){
         if (!skillRepository.findByName(requestDTO.getName()).isEmpty())
-            throw new ApiRequestException(requestDTO.toString() + " Already exist!!!");
+            throw new UniqueEntityException(requestDTO.toString() + " Already exist!!!");
 
         return new SkillResponseDTO((Skill) skillRepository.save(new Skill(requestDTO)));
     }
