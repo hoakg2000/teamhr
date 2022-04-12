@@ -59,10 +59,7 @@ public class SkillServiceImpl implements SkillService {
         if (!skillRepository.findByName(requestDTO.getName()).isEmpty())
             throw new ApiRequestException(requestDTO.toString() + " Already exist!!!");
 
-        Skill skill = new Skill(requestDTO);
-        skillRepository.save(skill);
-
-        return new SkillResponseDTO(skill);
+        return new SkillResponseDTO((Skill) skillRepository.save(new Skill(requestDTO)));
     }
 
     @Override
@@ -78,8 +75,7 @@ public class SkillServiceImpl implements SkillService {
 
         Skill skill = optionalSkill.get();
         skill.DTOtoEntity(requestDTO);
-        skillRepository.save(skill);
 
-        return new SkillResponseDTO(skill);
+        return new SkillResponseDTO(skillRepository.save(skill));
     }
 }
