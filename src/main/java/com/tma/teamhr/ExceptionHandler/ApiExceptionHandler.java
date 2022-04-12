@@ -12,33 +12,32 @@ import java.time.ZonedDateTime;
 @RestControllerAdvice
 public class ApiExceptionHandler {
 
-    @ExceptionHandler(value = {ApiRequestException.class})
+    @ExceptionHandler(ApiRequestException.class)
     public ResponseEntity<ResponseDTO> handleApiRequestException(ApiRequestException e){
         return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {UniqueEntityException.class})
+    @ExceptionHandler(UniqueEntityException.class)
     public ResponseEntity<ResponseDTO> handleUniqueEntityException(UniqueEntityException e){
         return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {EntityToDTOConvertException.class})
-    public ResponseEntity<ResponseDTO> handleEntityToDTOConvertException(UniqueEntityException e){
+    @ExceptionHandler(EntityToDTOConvertException.class)
+    public ResponseEntity<ResponseDTO> handleEntityToDTOConvertException(EntityToDTOConvertException e){
         return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {NotFoundException.class})
-    public ResponseEntity<ResponseDTO> handleNotFoundException(UniqueEntityException e){
+    @ExceptionHandler({NotFoundException.class})
+    public ResponseEntity<ResponseDTO> handleNotFoundException(NotFoundException e){
         return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(value = {DataBaseException.class})
-    public ResponseEntity<ResponseDTO> handleDataBaseException(UniqueEntityException e){
+    @ExceptionHandler(DataBaseException.class)
+    public ResponseEntity<ResponseDTO> handleDataBaseException(DataBaseException e){
         return new ResponseEntity<>(initExceptionResponse(e), HttpStatus.BAD_REQUEST);
     }
 
     public ResponseDTO initExceptionResponse(RuntimeException e){
-        ResponseDTO responseDTO = new ResponseDTO(e);
-        return responseDTO;
+        return new ResponseDTO(e);
     }
 }
