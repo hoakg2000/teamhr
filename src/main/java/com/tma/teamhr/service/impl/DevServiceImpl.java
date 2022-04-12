@@ -64,4 +64,17 @@ public class DevServiceImpl implements DevService {
         }
 
     }
+
+    @Override
+    public void delete(int id) {
+        try {
+            if (devRepository.findById(id).isEmpty())
+                throw new ApiRequestException(message.NOTEXIST_ID + id);
+
+            devRepository.deleteById(id);
+
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+    }
 }

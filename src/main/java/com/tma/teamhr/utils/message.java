@@ -8,5 +8,5 @@ public class message {
     public static final String UPDATE = "Update object successfully";
     public static final String WRONG_DATE_FORMAT = "Date format should be dd/MM/yyyy";;
     public static final String CREATE_SUCCESS = "Create new object successfully";
-
+    public static final String DELETE_FAILED = "Delete object failed";
 }

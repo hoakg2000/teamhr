@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,6 +69,19 @@ public class DevController {
         responseDTO.setHeader(HttpStatus.OK);
         responseDTO.setData(devService.create(requestDTO));
         responseDTO.setMessage(message.CREATE_SUCCESS);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/delete")
+    public ResponseEntity<ResponseDTO> delete(@PathVariable int id){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        responseDTO.setHeader(HttpStatus.OK);
+
+        devService.delete(id);
+
+        responseDTO.setMessage(message.DELETE);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

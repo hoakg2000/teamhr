@@ -10,4 +10,5 @@ public interface DevService {
     DevResponseDTO update(DevRequestDTO requestDTO);
     DevResponseDTO create(DevRequestDTO requestDTO);
     DevResponseDTO getById(int id);
+    void delete(int id);
 }
