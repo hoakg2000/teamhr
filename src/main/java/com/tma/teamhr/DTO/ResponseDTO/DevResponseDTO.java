@@ -17,6 +17,7 @@ public class DevResponseDTO {
     private String badgeId;
     private String phone;
     private Date birth;
+    private Collection<Skill> skills;
 
     public DevResponseDTO(Dev dev){
         this.id = dev.getId();
@@ -24,5 +25,6 @@ public class DevResponseDTO {
         this.badgeId = dev.getBadgeId();
         this.phone = dev.getPhone();
         this.birth = dev.getBirth();
+        this.skills = dev.getSkills();
     }
 }

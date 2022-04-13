@@ -32,6 +32,13 @@ public class Dev {
 
     private Date birth;
 
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "dev_skill",
+            joinColumns = @JoinColumn(name = "dev_id"),
+            inverseJoinColumns = @JoinColumn(name = "skill_id"))
+    private Collection<Skill> skills;
+
     private static final SimpleDateFormat birthStrFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public void DTOtoEntity(DevRequestDTO requestDTO){
