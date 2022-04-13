@@ -32,6 +32,10 @@ public class Dev {
 
     private Date birth;
 
+    @ManyToMany(mappedBy = "devs", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Collection<Team> teams;
+
     private static final SimpleDateFormat birthStrFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     public void DTOtoEntity(DevRequestDTO requestDTO){
