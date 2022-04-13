@@ -20,6 +20,11 @@ public class Checklist {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinColumn(name = "team_id")
+    private Team team;
+
     private String title;
 
     @CreationTimestamp
