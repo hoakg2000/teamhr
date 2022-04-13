@@ -45,6 +45,10 @@ public class Team {
             inverseJoinColumns = @JoinColumn(name = "dev_id"))
     private Collection<Dev> devs;
 
+    public void addDev(Dev dev){
+        this.devs.add(dev);
+    }
+
     public void DTOtoEntity(TeamRequestDTO requestDTO){
         this.name = requestDTO.getName();
     }
