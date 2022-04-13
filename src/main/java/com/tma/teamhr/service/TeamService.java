@@ -11,6 +11,4 @@ public interface TeamService {
     void delete(int id);
     TeamResponseDTO create(TeamRequestDTO requestDTO);
     TeamResponseDTO update(TeamRequestDTO requestDTO);
-    TeamResponseDTO addDev(int teamId, int devId);
-    TeamResponseDTO removeDev(int teamId, int devId);
 }

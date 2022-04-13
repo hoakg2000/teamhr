@@ -17,7 +17,6 @@ public class DevResponseDTO {
     private String badgeId;
     private String phone;
     private Date birth;
-    private Collection<Team> teams;
 
     public DevResponseDTO(Dev dev){
         this.id = dev.getId();
@@ -25,6 +24,5 @@ public class DevResponseDTO {
         this.badgeId = dev.getBadgeId();
         this.phone = dev.getPhone();
         this.birth = dev.getBirth();
-        this.teams = dev.getTeams();
     }
 }

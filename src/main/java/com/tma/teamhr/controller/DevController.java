@@ -98,7 +98,7 @@ public class DevController {
             throw new ApiRequestException("Page must be integer value");
         }
         ResponseDTO responseDTO = new ResponseDTO();
-        System.out.println(page);
+//        System.out.println(page);
         responseDTO.setHeader(HttpStatus.OK);
         responseDTO.setData(devService.getAllSortedByName(page));
         responseDTO.setMessage(message.GET);

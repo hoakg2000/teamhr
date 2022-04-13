@@ -1,7 +1,6 @@
 package com.tma.teamhr.controller;
 
 
-import com.tma.teamhr.DTO.RequestDTO.TeamDevRequestDTO;
 import com.tma.teamhr.DTO.RequestDTO.TeamRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.ResponseDTO;
 import com.tma.teamhr.DTO.ResponseDTO.TeamResponseDTO;
@@ -61,27 +60,6 @@ public class TeamController {
 
         teamService.delete(id);
         responseDTO.setMessage(message.DELETE);
-        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-    }
-
-    @PostMapping("/{teamId}/devs/add")
-    public ResponseEntity<ResponseDTO> addDev(@PathVariable int teamId,
-                                              @Valid @RequestBody TeamDevRequestDTO teamDevRequestDTO){
-        ResponseDTO responseDTO = new ResponseDTO();
-
-        responseDTO.setData(teamService.addDev(teamId, teamDevRequestDTO.getDev_id()));
-        responseDTO.setMessage(message.DELETE);
-        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
-    }
-
-    @PostMapping("/{teamId}/devs/remove")
-    public ResponseEntity<ResponseDTO> removeDev(@PathVariable int teamId,
-                                              @Valid @RequestBody TeamDevRequestDTO teamDevRequestDTO){
-        ResponseDTO responseDTO = new ResponseDTO();
-
-        responseDTO.setHeader(HttpStatus.OK);
-        responseDTO.setData(teamService.removeDev(teamId, teamDevRequestDTO.getDev_id()));
-        responseDTO.setMessage(message.UPDATE);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 

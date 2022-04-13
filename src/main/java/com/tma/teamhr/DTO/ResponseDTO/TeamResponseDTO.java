@@ -16,13 +16,11 @@ public class TeamResponseDTO {
     private String name;
     private Date createdAt;
     private Date updatedAt;
-    private Collection<Dev> devs;
 
     public TeamResponseDTO(Team team){
         this.id = team.getId();
         this.name = team.getName();
         this.createdAt = team.getCreatedAt();
         this.updatedAt = team.getUpdatedAt();
-        this.devs = team.getDevs();
     }
 }

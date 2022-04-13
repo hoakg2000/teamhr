@@ -38,20 +38,6 @@ public class Team {
     @JsonIgnore
     private Checklist checkList;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name = "team_dev",
-            joinColumns = @JoinColumn(name = "team_id"),
-            inverseJoinColumns = @JoinColumn(name = "dev_id"))
-    private Collection<Dev> devs;
-
-    public void addDev(Dev dev){
-        this.devs.add(dev);
-    }
-
-    public void removeDev(Dev dev){
-        this.devs.remove(dev);
-    }
 
     public void DTOtoEntity(TeamRequestDTO requestDTO){
         this.name = requestDTO.getName();
