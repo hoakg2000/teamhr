@@ -74,5 +74,16 @@ public class TeamController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
+    @PostMapping("/{teamId}/devs/remove")
+    public ResponseEntity<ResponseDTO> removeDev(@PathVariable int teamId,
+                                              @Valid @RequestBody TeamDevRequestDTO teamDevRequestDTO){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(teamService.removeDev(teamId, teamDevRequestDTO.getDev_id()));
+        responseDTO.setMessage(message.UPDATE);
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
 
 }

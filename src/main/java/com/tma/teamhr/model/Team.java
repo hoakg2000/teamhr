@@ -49,6 +49,10 @@ public class Team {
         this.devs.add(dev);
     }
 
+    public void removeDev(Dev dev){
+        this.devs.remove(dev);
+    }
+
     public void DTOtoEntity(TeamRequestDTO requestDTO){
         this.name = requestDTO.getName();
     }

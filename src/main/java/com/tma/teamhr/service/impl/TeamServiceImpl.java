@@ -104,4 +104,21 @@ public class TeamServiceImpl implements TeamService {
             throw new ApiRequestException(ex.getMessage());
         }
     }
+
+    @Override
+    public TeamResponseDTO removeDev(int teamId, int devId) {
+
+        Optional<Team> team = teamRepository.findById(teamId);
+        Optional<Dev> dev = devRepository.findById(devId);
+
+        if (team.isEmpty() || dev.isEmpty())
+            throw new NotFoundException(message.NOTEXIST_ID + teamId + "or" + devId);
+
+        try {
+            team.get().removeDev(dev.get());
+            return new TeamResponseDTO(teamRepository.save(team.get()));
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+    }
 }
