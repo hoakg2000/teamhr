@@ -52,4 +52,8 @@ public class Dev {
         }
     }
 
+    public void addSkill(Skill skill){
+        this.skills.add(skill);
+    }
+
 }

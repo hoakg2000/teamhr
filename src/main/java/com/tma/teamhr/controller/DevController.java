@@ -1,6 +1,7 @@
 package com.tma.teamhr.controller;
 
 import com.tma.teamhr.DTO.RequestDTO.DevRequestDTO;
+import com.tma.teamhr.DTO.RequestDTO.DevSkillRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.ResponseDTO;
 import com.tma.teamhr.service.DevService;
 import com.tma.teamhr.utils.message;
@@ -82,6 +83,18 @@ public class DevController {
         devService.delete(id);
 
         responseDTO.setMessage(message.DELETE);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/{devId}/skill/add")
+    public ResponseEntity<ResponseDTO> addSkill(@PathVariable int devId,
+                                                @Valid @RequestBody DevSkillRequestDTO devSkillRequestDTO){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(devService.addSkill(devId, devSkillRequestDTO.getSkill_id()));
+        responseDTO.setMessage(message.UPDATE);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }

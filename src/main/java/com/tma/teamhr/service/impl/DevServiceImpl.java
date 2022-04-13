@@ -3,8 +3,12 @@ package com.tma.teamhr.service.impl;
 import com.tma.teamhr.DTO.RequestDTO.DevRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.DevResponseDTO;
 import com.tma.teamhr.ExceptionHandler.ApiRequestException;
+import com.tma.teamhr.ExceptionHandler.NotFoundException;
+import com.tma.teamhr.ExceptionHandler.UniqueEntityException;
 import com.tma.teamhr.model.Dev;
+import com.tma.teamhr.model.Skill;
 import com.tma.teamhr.repository.DevRepository;
+import com.tma.teamhr.repository.SkillRepository;
 import com.tma.teamhr.service.DevService;
 import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,9 @@ public class DevServiceImpl implements DevService {
 
     @Autowired
     private DevRepository devRepository;
+
+    @Autowired
+    private SkillRepository skillRepository;
 
     public List<DevResponseDTO> getAll(){
         Iterable<Dev> devIterable = devRepository.findAll();
@@ -73,6 +80,26 @@ public class DevServiceImpl implements DevService {
 
             devRepository.deleteById(id);
 
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+    }
+
+    @Override
+    public DevResponseDTO addSkill(int devId, int skillId) {
+        Optional<Skill> skill = skillRepository.findById(skillId);
+        Optional<Dev> dev = devRepository.findById(devId);
+
+        if (skill.isEmpty() || dev.isEmpty())
+            throw new NotFoundException("Skill id not found");
+
+        if (dev.get().getSkills().contains(skill.get())){
+            throw new UniqueEntityException("Duplicate key dev and skill");
+        }
+
+        try {
+            dev.get().addSkill(skill.get());
+            return new DevResponseDTO(devRepository.save(dev.get()));
         }catch (Exception ex){
             throw new ApiRequestException(ex.getMessage());
         }
