@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import javax.persistence.Column;
+import java.util.Collection;
 import java.util.Date;
 
 @Entity
@@ -36,6 +37,13 @@ public class Team {
     @OneToOne(mappedBy = "team", fetch = FetchType.EAGER)
     @JsonIgnore
     private Checklist checkList;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "team_dev",
+            joinColumns = @JoinColumn(name = "team_id"),
+            inverseJoinColumns = @JoinColumn(name = "dev_id"))
+    private Collection<Dev> devs;
 
     public void DTOtoEntity(TeamRequestDTO requestDTO){
         this.name = requestDTO.getName();
