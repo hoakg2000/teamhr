@@ -1,11 +1,9 @@
 package com.tma.teamhr.DTO.ResponseDTO;
 
-import com.tma.teamhr.model.Dev;
 import com.tma.teamhr.model.Team;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Collection;
 import java.util.Date;
 
 @Getter

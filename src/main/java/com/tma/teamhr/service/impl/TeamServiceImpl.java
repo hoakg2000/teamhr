@@ -3,9 +3,6 @@ package com.tma.teamhr.service.impl;
 import com.tma.teamhr.DTO.RequestDTO.TeamRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.TeamResponseDTO;
 import com.tma.teamhr.ExceptionHandler.ApiRequestException;
-import com.tma.teamhr.ExceptionHandler.NotFoundException;
-import com.tma.teamhr.ExceptionHandler.UniqueEntityException;
-import com.tma.teamhr.model.Dev;
 import com.tma.teamhr.model.Team;
 import com.tma.teamhr.repository.DevRepository;
 import com.tma.teamhr.repository.TeamRepository;
@@ -25,9 +22,6 @@ public class TeamServiceImpl implements TeamService {
 
     @Autowired
     private TeamRepository teamRepository;
-
-    @Autowired
-    private DevRepository devRepository;
 
     @Override
     public List<TeamResponseDTO> getAll() {
@@ -57,7 +51,6 @@ public class TeamServiceImpl implements TeamService {
         teamRepository.save(team);
         return new TeamResponseDTO(team);
     }
-
 
     @Override
     public TeamResponseDTO create(TeamRequestDTO requestDTO) {
