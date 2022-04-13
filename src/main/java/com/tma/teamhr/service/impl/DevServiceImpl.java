@@ -46,4 +46,35 @@ public class DevServiceImpl implements DevService {
             throw new ApiRequestException(message.GET);
         return new DevResponseDTO(optionalDev.get());
     }
+
+    @Override
+    public DevResponseDTO update(DevRequestDTO requestDTO) {
+        try {
+            Optional<Dev> optionalDev = devRepository.findById(requestDTO.getId());
+            if (optionalDev.isEmpty())
+                throw new ApiRequestException(message.NOTEXIST_ID + requestDTO.getId());
+
+            Dev dev = optionalDev.get();
+            dev.DTOtoEntity(requestDTO);
+            devRepository.save(dev);
+
+            return new DevResponseDTO(dev);
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+
+    }
+
+    @Override
+    public void delete(int id) {
+        try {
+            if (devRepository.findById(id).isEmpty())
+                throw new ApiRequestException(message.NOTEXIST_ID + id);
+
+            devRepository.deleteById(id);
+
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+    }
 }

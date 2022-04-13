@@ -17,6 +17,12 @@ public class Skill {
 
     private String name;
 
+    public Skill(){}
+
+    public Skill(SkillRequestDTO requestDTO){
+        this.name = requestDTO.getName();
+    }
+
     public void DTOtoEntity(SkillRequestDTO dto){
         this.name = dto.getName();
     }

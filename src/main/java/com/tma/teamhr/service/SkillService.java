@@ -11,5 +11,5 @@ public interface SkillService {
     SkillResponseDTO getById(int id);
     SkillResponseDTO create(SkillRequestDTO requestDTO);
     SkillResponseDTO update(SkillRequestDTO requestDTO);
-    Boolean delete(int id);
+    void delete(int id);
 }
