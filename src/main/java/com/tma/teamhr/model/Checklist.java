@@ -42,6 +42,12 @@ public class Checklist {
     @JsonIgnore
     private Collection<Columnn> columnns;
 
+    public Checklist(){}
+
+    public Checklist(ChecklistRequestDTO requestDTO){
+        this.title = requestDTO.getTitle();
+    }
+
     public void DTOtoEntity(ChecklistRequestDTO requestDTO){
         this.title = requestDTO.getTitle();
     }
