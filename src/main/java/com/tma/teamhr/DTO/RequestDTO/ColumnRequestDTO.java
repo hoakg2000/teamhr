@@ -11,11 +11,13 @@ import java.util.Collection;
 @Setter
 public class ColumnRequestDTO {
 
+    private int id;
+
     @NotNull
     private String name;
 
     @NotNull
-    @Range(min = 1)
+    @Range(min = 1, max = 2)
     private int type;
 
 
