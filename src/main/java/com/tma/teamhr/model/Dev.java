@@ -56,4 +56,8 @@ public class Dev {
         this.skills.add(skill);
     }
 
+    public void removeSkill(Skill skill){
+        this.skills.remove(skill);
+    }
+
 }

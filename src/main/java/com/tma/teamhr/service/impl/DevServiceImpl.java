@@ -104,4 +104,20 @@ public class DevServiceImpl implements DevService {
             throw new ApiRequestException(ex.getMessage());
         }
     }
+
+    @Override
+    public DevResponseDTO removeSkill(int devId, int skillId) {
+        Optional<Skill> skill = skillRepository.findById(skillId);
+        Optional<Dev> dev = devRepository.findById(devId);
+
+        if (skill.isEmpty() || dev.isEmpty())
+            throw new NotFoundException("Skill id not found");
+
+        try {
+            dev.get().removeSkill(skill.get());
+            return new DevResponseDTO(devRepository.save(dev.get()));
+        }catch (Exception ex){
+            throw new ApiRequestException(ex.getMessage());
+        }
+    }
 }

@@ -98,4 +98,16 @@ public class DevController {
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
+
+    @PostMapping("/{devId}/skill/remove")
+    public ResponseEntity<ResponseDTO> removeSkill(@PathVariable int devId,
+                                                @Valid @RequestBody DevSkillRequestDTO devSkillRequestDTO){
+        ResponseDTO responseDTO = new ResponseDTO();
+
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(devService.removeSkill(devId, devSkillRequestDTO.getSkill_id()));
+        responseDTO.setMessage(message.UPDATE);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
 }

@@ -12,4 +12,5 @@ public interface DevService {
     DevResponseDTO getById(int id);
     void delete(int id);
     DevResponseDTO addSkill(int devId, int SkillId);
+    DevResponseDTO removeSkill(int devId, int skillId);
 }
