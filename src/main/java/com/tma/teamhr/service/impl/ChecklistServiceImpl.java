@@ -3,7 +3,10 @@ package com.tma.teamhr.service.impl;
 import com.tma.teamhr.DTO.RequestDTO.ChecklistRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.ChecklistResponseDTO;
 import com.tma.teamhr.ExceptionHandler.ApiRequestException;
+import com.tma.teamhr.ExceptionHandler.NotFoundException;
+import com.tma.teamhr.ExceptionHandler.UniqueEntityException;
 import com.tma.teamhr.model.Checklist;
+import com.tma.teamhr.model.Team;
 import com.tma.teamhr.repository.ChecklistRepository;
 import com.tma.teamhr.repository.TeamRepository;
 import com.tma.teamhr.service.ChecklistService;
@@ -48,13 +51,19 @@ public class ChecklistServiceImpl implements ChecklistService {
     @Override
     public ChecklistResponseDTO create(ChecklistRequestDTO requestDTO) {
         try{
-            Checklist checklist = new Checklist();
-            checklist.DTOtoEntity(requestDTO);
+            Checklist checklist = new Checklist(requestDTO);
 
-            checklist.setTeam(teamRepository.findById(requestDTO.getTeam_id()).get());
+            Optional<Team> team = teamRepository.findById(requestDTO.getTeam_id());
 
-            checklistRepository.save(checklist);
-            return new ChecklistResponseDTO(checklist);
+            if (team.isEmpty())
+                throw new NotFoundException("Team id not exist");
+
+            if (!checklistRepository.findByteam(team.get()).isEmpty())
+                throw new UniqueEntityException("Team_id " + requestDTO.getTeam_id() + " already has checklist");
+
+            checklist.setTeam(team.get());
+            return new ChecklistResponseDTO(checklistRepository.save(checklist));
+
         }catch (Exception ex){
             throw new ApiRequestException(ex.getMessage());
         }
