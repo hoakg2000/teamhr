@@ -8,6 +8,9 @@ import com.tma.teamhr.repository.DevRepository;
 import com.tma.teamhr.service.DevService;
 import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,8 @@ import java.util.Optional;
 @Transactional
 @Service
 public class DevServiceImpl implements DevService {
+
+    private static final int elements = 2;
 
     @Autowired
     private DevRepository devRepository;
@@ -76,5 +81,14 @@ public class DevServiceImpl implements DevService {
         }catch (Exception ex){
             throw new ApiRequestException(ex.getMessage());
         }
+    }
+
+    public List<DevResponseDTO> getAllSortedByName(int page){
+        Pageable sortedByName = PageRequest.of(page, elements, Sort.by("badgeId"));
+        List<DevResponseDTO> devList = new ArrayList<>();
+        devRepository.findAll(sortedByName).getContent().forEach(dev -> {
+            devList.add(new DevResponseDTO(dev));
+        });
+        return devList;
     }
 }

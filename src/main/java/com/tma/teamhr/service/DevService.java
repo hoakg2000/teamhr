@@ -11,4 +11,5 @@ public interface DevService {
     DevResponseDTO create(DevRequestDTO requestDTO);
     DevResponseDTO getById(int id);
     void delete(int id);
+    List<DevResponseDTO> getAllSortedByName(int page);
 }
