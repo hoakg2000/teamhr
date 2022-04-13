@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 @Getter
@@ -34,6 +35,18 @@ public class ResponseDTO {
     private Message message = new Message();
 
     public ResponseDTO(){}
+
+    public ResponseDTO(RuntimeException e){
+        setHeader(HttpStatus.BAD_REQUEST);
+        setMessage(e.getMessage());
+        setError(e);
+        setTime(ZonedDateTime.now(ZoneId.of("Z")));
+    }
+    public ResponseDTO(Object data){
+        setHeader(HttpStatus.OK);
+        setData(data);
+        setTime(ZonedDateTime.now(ZoneId.of("Z")));
+    }
 
     public ResponseDTO(HttpStatus code, Object obj){
         setHeader(code);
