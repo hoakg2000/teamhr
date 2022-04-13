@@ -2,6 +2,7 @@ package com.tma.teamhr.controller;
 
 import com.tma.teamhr.DTO.RequestDTO.DevRequestDTO;
 import com.tma.teamhr.DTO.ResponseDTO.ResponseDTO;
+import com.tma.teamhr.ExceptionHandler.ApiRequestException;
 import com.tma.teamhr.service.DevService;
 import com.tma.teamhr.utils.message;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/devs")
@@ -82,6 +85,23 @@ public class DevController {
         devService.delete(id);
 
         responseDTO.setMessage(message.DELETE);
+
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("/get/sorted")
+    public ResponseEntity<ResponseDTO> getSorted(@RequestParam(required = false) Map<String, String> params){
+        int page;
+        try {
+            page = Integer.parseInt(params.getOrDefault("page", "0"));
+        }catch (Exception ex){
+            throw new ApiRequestException("Page must be integer value");
+        }
+        ResponseDTO responseDTO = new ResponseDTO();
+        System.out.println(page);
+        responseDTO.setHeader(HttpStatus.OK);
+        responseDTO.setData(devService.getAllSortedByName(page));
+        responseDTO.setMessage(message.GET);
 
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
