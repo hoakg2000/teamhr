@@ -33,7 +33,7 @@ public class Team {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date updatedAt;
 
-    @OneToOne(mappedBy = "team", fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "team", fetch = FetchType.LAZY)
     @JsonIgnore
     private Checklist checkList;
 
