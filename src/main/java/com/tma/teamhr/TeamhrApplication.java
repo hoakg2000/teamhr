@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories
 public class TeamhrApplication {
-
+//test
 	public static void main(String[] args) {
 		SpringApplication.run(TeamhrApplication.class, args);
 	}
